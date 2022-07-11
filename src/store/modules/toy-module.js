@@ -2,23 +2,45 @@ import { toyService } from '../../services/toy-service.js'
 
 export default {
   state: {
-    toys: 4,
+    toys: '',
     currEdited: false,
     filterBy:{
-      name:'',
       availability:false,
       label:'',
       searchedTerm:'',
     }
   },
   getters: {
-    getToys({ toys }) {
-      return toys
-    },
-    getCurrEdited({ currEdited }) {
-      return currEdited
-    }
+    getToys({ filterBy, toys}) {
+      if(!toys){
+
+      }
+      console.log('toys: ',toys)
+      var filteredToys = toys
+      if(filterBy.searchedTerm){
+        const regex = new RegExp(filterBy.searchedTerm, 'i')
+        filteredToys = toys.filter((toy) => regex.test(toy.name))
+      }    
+      if(filterBy.label){
+        const regex2 = new RegExp(filterBy.label, 'i')
+        filteredToys = toys.filter((toy) => {
+          regex.test(toy.labels[1],toy.labels[2])})
+
+      }
+
+      if (filterBy.availability) {
+        filteredToys = filteredToys.filter(
+          (toy) => toy.inStock == true
+        )
+      }
+
+      if(!filteredToys){
+        return toys
+      }
+      else return filteredToys
+
   },
+},
   mutations: {
     removeToy(state, { toy }) {
       const idx = state.toys.findIndex(currToy => currToy._id === toy._id)
