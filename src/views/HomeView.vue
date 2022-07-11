@@ -1,9 +1,21 @@
-<script setup>
-import TheWelcome from '@/components/TheWelcome.vue'
+<script>
+import appHeader from '@/components/app-header.vue'
+import toyList from '../components/toy-list.cmp.vue'
+
+export default {
+  components: {
+    appHeader,
+    toyList,
+  },
+  created() {
+    this.$store.dispatch({ type: 'loadToys' })
+  }
+}
 </script>
 
 <template>
   <main>
-    <TheWelcome />
+    <app-header />
+    <toy-list />
   </main>
 </template>
