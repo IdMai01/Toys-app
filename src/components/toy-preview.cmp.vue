@@ -14,6 +14,7 @@
         <div class="toy-price">
             price: {{ toy.price }}$
         </div>
+        <router-link class="details-btn" :to="'/details/' + toy._id">Details</router-link>
     </section>
 </template>
 
@@ -131,5 +132,17 @@ export default {
 .noOpacity {
     opacity: 0;
     transition: opacity 600ms;
+}
+
+.details-btn {
+    transition: 1s;
+    color: rgb(69, 219, 169);
+}
+
+.details-btn:hover {
+    color: rgb(9, 173, 140);
+    cursor: pointer;
+    background-color: transparent;
+    transition: 1s;
 }
 </style>

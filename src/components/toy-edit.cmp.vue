@@ -11,9 +11,9 @@
                 <input v-model="this.newToy.price" placeholder="Enter a price" type="number">
                 <input v-model="this.newToy.labels" placeholder="Add comma seperated labels" type="text">
             </section>
-            <router-link @click="save()" class="add-btn" to="/">
+            <button @click="save()" class="add-btn">
                 Add
-            </router-link>
+            </button>
         </section>
     </section>
 </template>
@@ -36,7 +36,6 @@ export default {
         };
     },
     created() {
-        console.log('this.$', this.$store.getters.getCurrEdited)
         if (this.$store.getters.getCurrEdited) {
             var temp = this.$store.getters.getCurrEdited
             this.newToy._id = temp._id
@@ -48,10 +47,15 @@ export default {
     },
     methods: {
         save() {
+            if (!this.newToy.name || !this.newToy.price) {
+                alert('you must give the toy both a price and a name')
+                return
+            }
             this.$store.dispatch({
                 type: 'saveToy',
                 toy: this.newToy
             })
+            this.$router.push('/')
         }
     },
     computed: {},
@@ -110,5 +114,12 @@ export default {
     border-radius: 5px;
     background-color: rgb(229, 239, 255);
     color: black;
+    border: 0;
+    transition: 0.6s;
+}
+
+.add-btn:hover {
+    background-color: rgba(127, 255, 212, 0.225);
+    cursor: pointer;
 }
 </style>

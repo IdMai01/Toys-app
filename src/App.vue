@@ -27,7 +27,7 @@ a,
 @media (hover: hover) {
   a:hover:not(.add-toy-btn:hover) {
     border-radius: 10px;
-    background-color: hsla(161, 30%, 82%, 0.779);
+    /* background-color: hsla(161, 30%, 82%, 0.779); */
   }
 }
 

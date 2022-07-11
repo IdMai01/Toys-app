@@ -2,8 +2,14 @@ import { toyService } from '../../services/toy-service.js'
 
 export default {
   state: {
-    toys: null,
+    toys: 4,
     currEdited: false,
+    filterBy:{
+      name:'',
+      availability:false,
+      label:'',
+      searchedTerm:'',
+    }
   },
   getters: {
     getToys({ toys }) {

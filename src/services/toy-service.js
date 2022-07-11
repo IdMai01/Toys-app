@@ -22,6 +22,7 @@ function getById(id) {
   return storageService.get(KEY, id)
 }
 
+
 function remove(id) {
   return storageService.remove(KEY, id)
 }
@@ -45,7 +46,6 @@ function getEmptyToy() {
 }
 
 function _createToys() {
-  console.log('dsf: ')
   var toys = JSON.parse(localStorage.getItem(KEY))
   if (!toys || !toys.length) {
     toys = [
@@ -65,6 +65,7 @@ function _createToy(name) {
     price: utilService.getRandomInt(80,360),
     labels: ['Toy', "Battery", "Baby"],
     createdAt: 1631031801011,
-    inStock: true
+    inStock: true,
+    reviews:["best product ever!!","best design ive ever seen!"],
   }
 }
