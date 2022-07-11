@@ -1,15 +1,18 @@
 
 <template>
-    <section class="toy-preview-container">
-        <div class="toy-name">
-            {{toy.name}}
-        </div>
+    <section @mouseout="this.isHover = false" @mouseover="this.isHover = true" class="toy-preview-container">
+        <section class="tools-and-toy-name">
+            <img @click="removeToy(toy)" :class="{ noOpacity: !isHover }" src="../img/trash.svg" alt="DELETE">
+            <div class="toy-name">
+                {{ toy.name }}
+            </div>
+            <img @click='editToy(toy)' :class="{ noOpacity: !isHover }" src="../img/edit.svg" alt="EDIT">
+        </section>
         <section class="toy-labels">
-            <div :key="idx" v-for="(label, idx) in toy.labels" 
-            class="toy-label">{{toy.labels[idx]}}</div>
+            <div :key="idx" v-for="(label, idx) in toy.labels" class="toy-label">{{ toy.labels[idx] }}</div>
         </section>
         <div class="toy-price">
-            price: {{toy.price}}$
+            price: {{ toy.price }}$
         </div>
     </section>
 </template>
@@ -22,7 +25,27 @@ export default {
             required: true,
         },
     },
-    created(){
+    data() {
+        return {
+            isHover: false,
+        };
+    },
+    methods: {
+        removeToy(toy) {
+            this.$store.dispatch({
+                type: "removeToy",
+                toy,
+            })
+        },
+        editToy(toy) {
+            this.$store.commit({
+                type: "setCurrEdited",
+                toy,
+            })
+            this.$router.push('/edit')
+        }
+    },
+    created() {
     }
 }
 
@@ -49,11 +72,37 @@ export default {
     transition: 600ms;
 }
 
-.toy-name {
-    font-size: 1.2rem;
-    font-weight: 650;
-    align-self: center;
+.tools-and-toy-name {
     grid-column: 1/4;
+    display: grid;
+    grid-template-columns: 1fr 3fr 1fr;
+}
+
+.tools-and-toy-name>* {
+    width: 20px;
+    align-self: center;
+    text-align: center;
+}
+
+.tools-and-toy-name img {
+    margin: auto;
+    padding: 3px;
+    border-radius: 5px;
+    transition: 0.4s;
+    transition: opacity 600ms;
+}
+
+.tools-and-toy-name img:hover {
+    background-color: rgb(232, 230, 230);
+    cursor: pointer;
+}
+
+.toy-name {
+    width: fit-content;
+    justify-self: center;
+    grid-column: 2/3;
+    font-size: 1rem;
+    font-weight: 650;
 }
 
 .toy-labels {
@@ -75,7 +124,12 @@ export default {
 }
 
 .toy-price {
-    grid-column: 2/4;
+    grid-column: 1/4;
     align-self: center;
+}
+
+.noOpacity {
+    opacity: 0;
+    transition: opacity 600ms;
 }
 </style>

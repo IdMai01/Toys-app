@@ -27,7 +27,6 @@ export default {
 .toy-list-container {
   width: 80vw;
   margin: auto;
-  margin-top: 6vh;
   display: grid;
   grid-template-columns: repeat(3, 1fr);
   gap: 6vh;

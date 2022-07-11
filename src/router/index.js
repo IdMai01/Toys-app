@@ -1,6 +1,7 @@
 import { createRouter, createWebHistory } from 'vue-router'
 import HomeView from '../views/HomeView.vue'
 import about from '../views/AboutView.vue'
+import edit from '../components/toy-edit.cmp.vue'
 
 const router = createRouter({
   history: createWebHistory(),
@@ -15,6 +16,11 @@ const router = createRouter({
       path: '/about',
       name: 'about',
       component: about
+    },
+    {
+      path: '/edit',
+      name: 'edit',
+      component: edit
     }
   ]
 })

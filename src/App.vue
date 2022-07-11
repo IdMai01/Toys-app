@@ -5,10 +5,10 @@ import { RouterLink, RouterView } from 'vue-router'
 
 <template>
   <header>
-      <nav>
-        <RouterLink to="/">Home</RouterLink>
-        <RouterLink to="/about">About</RouterLink>
-      </nav>
+    <nav>
+      <RouterLink to="/">Home</RouterLink>
+      <RouterLink to="/about">About</RouterLink>
+    </nav>
   </header>
 
   <RouterView />
@@ -25,7 +25,7 @@ a,
 }
 
 @media (hover: hover) {
-  a:hover {
+  a:hover:not(.add-toy-btn:hover) {
     border-radius: 10px;
     background-color: hsla(161, 30%, 82%, 0.779);
   }
@@ -36,6 +36,7 @@ nav {
   background-color: rgb(33, 35, 44);
   padding: 30px;
 }
+
 nav a {
   display: inline-block;
   padding: 0 1rem;
@@ -45,5 +46,4 @@ nav a {
 nav a:first-of-type {
   border: 0;
 }
-
 </style>
