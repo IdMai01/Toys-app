@@ -1,5 +1,7 @@
 import { createRouter, createWebHistory } from 'vue-router'
-import HomeView from '../views/HomeView.vue'
+import homePage from '../views/home-page.cmp.vue'
+import dashboard from '../views/dashboard-page.cmp.vue'
+import toysApp from '../views/toy-app.cmp.vue'
 import about from '../views/AboutView.vue'
 import edit from '../components/toy-edit.cmp.vue'
 import details from '../components/toy-details.cmp.vue'
@@ -9,14 +11,24 @@ const router = createRouter({
   linkActiveClass: 'active',
   routes: [
     {
-      path: '/',
+      path: '/toys-app',
       name: 'home',
-      component: HomeView
+      component: homePage
+    },
+    {
+      path: '/toys',
+      name: 'toysApp',
+      component: toysApp
     },
     {
       path: '/about',
       name: 'about',
       component: about
+    }, 
+    {
+      path: '/dashboard',
+      name: 'dashboard',
+      component: dashboard
     },
     {
       path: '/edit/:toyId?',

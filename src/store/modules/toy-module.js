@@ -6,6 +6,23 @@ export default {
     filterBy: null,
   },
   getters: {
+    getLabelsCount({ toys }) {
+      if (!toys) return
+      let labelsCount = {}
+      toys.forEach((toy) => {
+        toy.labels.forEach((label) => {
+          if (!labelsCount[label]) labelsCount[label] = 0
+          labelsCount[label]++
+        })
+      })
+      return labelsCount
+    },
+    getToysStock({ toys }) {
+      if (!toys) return
+      let toysStock = [0, 0]
+      toys.forEach((toy) => (toy.inStock ? toysStock[0]++ : toysStock[1]++))
+      return toysStock
+    },
     getToys({ toys, filterBy }) {
       if (!filterBy) {
         return toys
@@ -16,8 +33,10 @@ export default {
       const regex = new RegExp(searchedTerm, 'i')
       let filteredToys = toys.filter(toy => regex.test(toy.name))
 
-      if (label) {
-        filteredToys = filteredToys.filter((toy) => toy.labels.includes(label))
+      if (label && label.length) {
+        filteredToys = filteredToys.filter((toy) =>
+          label.some((currLabel) => toy.labels.includes(currLabel))
+        )
       }
 
       if (availability) {
