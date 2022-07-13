@@ -22,14 +22,3 @@ export default {
     },
 }
 </script>
-
-<style>
-.toy-list-container {
-  width: 80vw;
-  margin: auto;
-  display: grid;
-  grid-template-columns: repeat(3, 1fr);
-  gap: 6vh;
-
-}
-</style>

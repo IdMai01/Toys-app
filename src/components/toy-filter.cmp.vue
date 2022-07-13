@@ -40,26 +40,3 @@ export default {
     },
 }
 </script>
-<style>
-.toy-filter-cmp{
-    display: flex;
-    align-items: center;
-}
-.toy-filter-cmp>*:not(last-child){
-    margin-right: 10px;
-    text-align: center;
-}
-.search-bar {
-    width: 50%;
-}
-
-.labels-filter {
-    width: 35%;
-}
-
-.checkbox-container {
-    display: flex;
-    justify-content: center;
-}
-
-</style>
