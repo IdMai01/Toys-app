@@ -11,14 +11,22 @@
                 <input v-model="this.newToy.price" placeholder="Enter a price" type="number">
                 <input v-model="this.newToy.labels" placeholder="Add comma seperated labels" type="text">
             </section>
-            <button @click="save()" class="add-btn">
-                Add
-            </button>
+            <section class="toy-availabillity-and-save-btn">
+
+                <div class="checkbox">
+                    <input v-model="this.newToy.inStock" type="checkbox" name="" id="inStock">
+                    <label for="inStock">Available in stock</label>
+                </div>
+                <button @click="save()" class="add-btn">
+                    Add
+                </button>
+            </section>
         </section>
     </section>
 </template>
 <script>
 
+import { toyService } from '../services/toy-service.js'
 import appHeader from './app-header.vue'
 
 export default {
@@ -31,18 +39,15 @@ export default {
                 price: '',
                 labels: '',
                 createdAt: '',
-                inStock: true
+                inStock: false
             }
         };
     },
     created() {
-        if (this.$store.getters.getCurrEdited) {
-            var temp = this.$store.getters.getCurrEdited
-            this.newToy._id = temp._id
-            this.newToy.name = temp.name
-            this.newToy.price = temp.price
-            this.newToy.labels = temp.labels
-            this.newToy.createdAt = temp.createdAt
+        const { toyId } = this.$route.params
+        if (toyId) {
+            toyService.getById(toyId)
+                .then(toy => this.newToy = toy)
         }
     },
     methods: {
@@ -121,5 +126,28 @@ export default {
 .add-btn:hover {
     background-color: rgba(127, 255, 212, 0.225);
     cursor: pointer;
+}
+
+.toy-availabillity-and-save-btn {
+    display: grid;
+    height: fit-content;
+}
+
+.toy-availabillity-and-save-btn button {
+    grid-row: 2;
+}
+
+.toy-availabillity-and-save-btn .checkbox {
+    grid-row: 1;
+    height: min-content;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.checkbox input {
+    margin: 0;
+    margin-right: 10px;
+    width: fit-content;
 }
 </style>

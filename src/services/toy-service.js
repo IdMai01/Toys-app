@@ -1,7 +1,7 @@
 import { storageService } from './async-storage.service.js'
 import { utilService } from './util-service.js'
+import axios from "axios";
 
-const KEY = 'toysDB'
 
 export const toyService = {
   query,
@@ -11,27 +11,44 @@ export const toyService = {
   getEmptyToy,
 }
 
-var gToys = _createToys()
+const KEY = 'toysDB'
 
-// Toy: support paging and filtering and sorting
-function query() {
-  return storageService.query(KEY)
+_createToys()
+
+function _getUrl(id = "") {
+  console.log(id);
+  const BASE_URL =
+    process.env.NODE_ENV !== "development"
+      ? "/api/toy"
+      : "//localhost:3030/api/toy";
+  return `${BASE_URL}/${id}`;
+}
+
+function query(filterBy = null) {
+  return axios.get(_getUrl(), { params: filterBy }).then((res) => res.data);
 }
 
 function getById(id) {
-  return storageService.get(KEY, id)
+  return axios.get(_getUrl(id)).then((res) => res.data);
+  // return storageService.get(KEY, id)
 }
 
 
 function remove(id) {
-  return storageService.remove(KEY, id)
+  return axios.delete(_getUrl(id)).then((res) => res.data);
+  // return storageService.remove(KEY, id)
 }
 
 function save(toy) {
-  const savedToy = toy._id
-    ? storageService.put(KEY, toy)
-    : storageService.post(KEY, toy)
-  return savedToy
+  if (toy._id) {
+    return axios.put(_getUrl(toy._id), toy).then((res) => res.data);
+  } else {
+    return axios.post(_getUrl(), toy).then((res) => res.data);
+  }
+  // const savedToy = toy._id
+  //   ? storageService.put(KEY, toy)
+  //   : storageService.post(KEY, toy)
+  // return savedToy
 }
 
 function getEmptyToy() {

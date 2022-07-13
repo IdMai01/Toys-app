@@ -1,15 +1,17 @@
 
 <template>
     <section class="toy-filter-cmp">
-        <input v-model="filterBy.searchedTerm" type="text" placeholder="search for a specific toy">
-        <select v-model="filterBy.label" name="filter" id="" val>
+        <input @input="setFilterBy" v-model="filterBy.searchedTerm" type="text" placeholder="search for a specific toy">
+        <select @change="setFilterBy" v-model="filterBy.label" name="filter" id="" val>
             <option disabled value="">labels</option>
-            <option value="Toy">toy</option>
-            <option value="Battery">battery</option>
-            <option value="Baby">baby</option>
+            <option value="">All</option>
+            <option value="Toy">Toy</option>
+            <option value="Battery">Battery</option>
+            <option value="Baby">Baby</option>
+            <option value="Dragon">Dragon</option>
         </select>
-        available toys only<input @click="toggleAvaillablityFilter" type="checkbox" name="isInStock"
-            id="isStock-checkbox">
+        available toys only<input @click="toggleAvaillablityFilter" class="filter-checkbox" @change="setFilterBy"
+            type="checkbox" name="isInStock" id="isStock-checkbox">
     </section>
 </template>
 <script>
@@ -17,29 +19,28 @@ export default {
     data() {
         return {
             filterBy: {
-                searchedTerm: 's',
+                searchedTerm: '',
                 availability: false,
                 label: '',
             }
         }
     },
     methods: {
-        toggleAvaillablityFilter(){
+        toggleAvaillablityFilter() {
             this.filterBy.availability = !this.filterBy.availability
         },
-        setFilterBy(){
-            
+        setFilterBy() {
+            const filter = JSON.parse(JSON.stringify(this.filterBy))
+            this.$store.commit({
+                type: 'setFilterBy',
+                filterBy: filter
+            })
         }
     },
-    watch: {
-    filterBy(newVal) {
-      this.setFilterBy()
-      }
-    }
 }
 </script>
 <style>
-.toy-filter-cmp input,
+.toy-filter-cmp input:not(.filter-checkbox),
 select {
     border-radius: 5px;
     margin: 0 1px;
@@ -49,5 +50,12 @@ select {
 
 .toy-filter-cmp ::placeholder {
     color: rgb(38, 28, 28);
+}
+
+.filter-checkbox {
+    height: 10px;
+    margin: 7px;
+    margin-right: 0;
+    cursor: pointer;
 }
 </style>

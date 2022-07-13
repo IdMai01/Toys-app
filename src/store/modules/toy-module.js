@@ -3,44 +3,30 @@ import { toyService } from '../../services/toy-service.js'
 export default {
   state: {
     toys: '',
-    currEdited: false,
-    filterBy:{
-      availability:false,
-      label:'',
-      searchedTerm:'',
-    }
+    filterBy: null,
   },
   getters: {
-    getToys({ filterBy, toys}) {
-      if(!toys){
-
-      }
-      console.log('toys: ',toys)
-      var filteredToys = toys
-      if(filterBy.searchedTerm){
-        const regex = new RegExp(filterBy.searchedTerm, 'i')
-        filteredToys = toys.filter((toy) => regex.test(toy.name))
-      }    
-      if(filterBy.label){
-        const regex2 = new RegExp(filterBy.label, 'i')
-        filteredToys = toys.filter((toy) => {
-          regex.test(toy.labels[1],toy.labels[2])})
-
-      }
-
-      if (filterBy.availability) {
-        filteredToys = filteredToys.filter(
-          (toy) => toy.inStock == true
-        )
-      }
-
-      if(!filteredToys){
+    getToys({ toys, filterBy }) {
+      if (!filterBy) {
         return toys
       }
-      else return filteredToys
 
+      let { searchedTerm, label, availability } = filterBy
+
+      const regex = new RegExp(searchedTerm, 'i')
+      let filteredToys = toys.filter(toy => regex.test(toy.name))
+
+      if (label) {
+        filteredToys = filteredToys.filter((toy) => toy.labels.includes(label))
+      }
+
+      if (availability) {
+        filteredToys = filteredToys.filter(toy => toy.inStock == true)
+      }
+      return filteredToys
+
+    },
   },
-},
   mutations: {
     removeToy(state, { toy }) {
       const idx = state.toys.findIndex(currToy => currToy._id === toy._id)
@@ -50,11 +36,15 @@ export default {
       state.toys = toys
     },
     saveToy(state, { toy }) {
-      state.toys.push(toy)
+      var toyIdx = state.toys.findIndex(currToy => toy._id === currToy._id)
+      if (toyIdx < 0) {
+        state.toys.push(toy)
+      }
+      else state.toys.splice(toyIdx, 1, toy)
     },
-    setCurrEdited(state, { toy = false }) {
-      state.currEdited = toy
-    }
+    setFilterBy(state, { filterBy }) {
+      state.filterBy = filterBy
+    },
   },
   actions: {
     removeToy({ commit }, payload) {
@@ -62,7 +52,9 @@ export default {
       return toyService.remove(payload.toy._id)
     },
     saveToy({ commit }, { toy }) {
-      commit({ type: 'setCurrEdited' })
+      if (typeof toy.labels === 'string') {
+        toy.labels = toy.labels.split(',')
+      }
       return toyService.save(toy)
         .then((savedtoy) => {
           commit({ type: 'saveToy', toy: savedtoy })
@@ -74,6 +66,9 @@ export default {
         .then((toys) => {
           commit({ type: 'setToys', toys })
         })
+    },
+    setFilterBy({ commit }, { filterBy }) {
+      commit({ type: "setFilterBy", filterBy })
     },
   },
 }

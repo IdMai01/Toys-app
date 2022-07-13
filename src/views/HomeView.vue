@@ -9,9 +9,7 @@ export default {
     toyList,
     toolsBar,
   },
-  created() {
-    this.$store.dispatch({ type: 'loadToys' })
-  }
+  
 }
 </script>
 

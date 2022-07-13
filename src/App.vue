@@ -1,6 +1,13 @@
-<script setup>
+<script>
 import { RouterLink, RouterView } from 'vue-router'
-
+export default {
+  components: {
+  RouterLink,RouterView
+  },
+  created() {
+    this.$store.dispatch({ type: 'loadToys' })
+  }
+}
 </script>
 
 <template>

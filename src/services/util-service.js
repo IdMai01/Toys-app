@@ -1,3 +1,10 @@
+
+export const utilService = {
+  makeId,
+  getRandomInt,
+  debounce,
+}
+
 function makeId(length = 5) {
   var txt = ''
   var possible =
@@ -8,7 +15,7 @@ function makeId(length = 5) {
   return txt
 }
 
-// The maximum is inclusive and the minimum is inclusive
+//min&max inclusive
 function getRandomInt(min, max) {
   min = Math.ceil(min)
   max = Math.floor(max)
@@ -32,9 +39,3 @@ function debounce(func, wait = 1000) {
 // function randomBoolen(){
 //   console.log('getRandomInt(0,1): ',utilService.getRandomInt(0,10))
 // }
-
-export const utilService = {
-  makeId,
-  getRandomInt,
-  debounce,
-}

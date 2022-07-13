@@ -39,11 +39,7 @@ export default {
             })
         },
         editToy(toy) {
-            this.$store.commit({
-                type: "setCurrEdited",
-                toy,
-            })
-            this.$router.push('/edit')
+            this.$router.push('/edit/' + toy._id)
         }
     },
     created() {
