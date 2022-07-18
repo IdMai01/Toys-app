@@ -33,7 +33,6 @@ export default {
     data() {
         return {
             newToy: {
-                _id: '',
                 name: '',
                 price: '',
                 labels: '',
@@ -59,13 +58,15 @@ export default {
                 type: 'saveToy',
                 toy: this.newToy
             })
-            this.$router.push('/')
+            this.$router.push('/toys')
         }
     },
     computed: {},
     components: {
         appHeader,
     },
-    unmounted() { },
+    unmounted() { 
+    this.$store.dispatch({ type: 'loadToys' })
+    },
 };
 </script>

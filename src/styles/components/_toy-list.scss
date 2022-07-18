@@ -1,6 +1,7 @@
 .toy-list-container {
   width: 80vw;
   margin: auto;
+  margin-bottom: 20px;
   display: grid;
   grid-template-columns: repeat(3, 1fr);
   gap: 6vh;

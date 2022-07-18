@@ -75,6 +75,8 @@
 .details-btn {
     transition: 1s;
     color: rgb(69, 219, 169);
+    text-decoration: none;
+    margin-left: 10px;
 
     &:hover {
         color: rgb(9, 173, 140);

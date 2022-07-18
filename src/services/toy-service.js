@@ -16,7 +16,6 @@ const KEY = 'toysDB'
 _createToys()
 
 function _getUrl(id = "") {
-  console.log(id);
   const BASE_URL =
     process.env.NODE_ENV !== "development"
       ? "/api/toy"
@@ -25,30 +24,24 @@ function _getUrl(id = "") {
 }
 
 function query(filterBy = null) {
-  return axios.get(_getUrl(), { params: filterBy }).then((res) => res.data);
+  return axios.get(_getUrl("toys"), { params: filterBy }).then((res) => res.data);
 }
 
 function getById(id) {
   return axios.get(_getUrl(id)).then((res) => res.data);
-  // return storageService.get(KEY, id)
 }
 
 
 function remove(id) {
   return axios.delete(_getUrl(id)).then((res) => res.data);
-  // return storageService.remove(KEY, id)
 }
 
 function save(toy) {
   if (toy._id) {
-    return axios.put(_getUrl(toy._id), toy).then((res) => res.data);
+    axios.put(_getUrl(toy._id), toy)
   } else {
-    return axios.post(_getUrl(), toy).then((res) => res.data);
-  }
-  // const savedToy = toy._id
-  //   ? storageService.put(KEY, toy)
-  //   : storageService.post(KEY, toy)
-  // return savedToy
+    return axios.post(_getUrl(), toy).then((res) => res = res.data.ops[0]);
+    }
 }
 
 function getEmptyToy() {

@@ -1,0 +1,56 @@
+.log-in-layout {
+    background-color: white;
+    height: 88.3vh;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+form {
+    background-color: #29b6f6;
+    outline: 3px solid black;
+    border-radius: 10px;
+    display: grid;
+    justify-content: center;
+    align-items: center;
+    height: 30vh;
+    width: fit-content;
+    padding: 15px;
+
+    h1 {
+        margin: 0 auto;
+        color: rgb(255, 255, 255);
+        font-size: 2em;
+    }
+
+    button {
+        background-color: white;
+        width: fit-content;
+        border-radius: 4px;
+        border: 0ch;
+        outline: 1px solid black;
+        margin: auto;
+        transition: 600ms;
+
+        &:hover {
+            cursor: pointer;
+            background-color: #424242;
+            color: white;
+        }
+    }
+
+    .inputs {
+        height: fit-content;
+        display: grid;
+        grid-template-rows: repeat(2, 1fr);
+
+        input {
+            font-size: 0.9em;
+            border: 2px solid black;
+            border-radius: 5px;
+            height: 1.5em;
+            margin-top: 10px;
+            margin-bottom: 10px;
+        }
+    }
+}

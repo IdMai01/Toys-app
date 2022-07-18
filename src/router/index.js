@@ -3,6 +3,7 @@ import homePage from '../views/home-page.cmp.vue'
 import dashboard from '../views/dashboard-page.cmp.vue'
 import toysApp from '../views/toy-app.cmp.vue'
 import about from '../views/AboutView.vue'
+import logIn from '../views/log-in.vue'
 import edit from '../components/toy-edit.cmp.vue'
 import details from '../components/toy-details.cmp.vue'
 
@@ -29,6 +30,11 @@ const router = createRouter({
       path: '/dashboard',
       name: 'dashboard',
       component: dashboard
+    },
+    {
+      path: '/log-in',
+      name: 'logIn',
+      component: logIn
     },
     {
       path: '/edit/:toyId?',

@@ -55,8 +55,10 @@ export default {
       state.toys = toys
     },
     saveToy(state, { toy }) {
+      console.log('state.toys,toy: ',state.toys,toy)
       var toyIdx = state.toys.findIndex(currToy => toy._id === currToy._id)
       if (toyIdx < 0) {
+      console.log('toy in store: ',toy)
         state.toys.push(toy)
       }
       else state.toys.splice(toyIdx, 1, toy)
@@ -75,10 +77,6 @@ export default {
         toy.labels = toy.labels.split(',')
       }
       return toyService.save(toy)
-        .then((savedtoy) => {
-          commit({ type: 'saveToy', toy: savedtoy })
-          return savedtoy
-        })
     },
     loadToys({ commit }) {
       toyService.query()
